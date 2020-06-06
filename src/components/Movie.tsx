@@ -11,7 +11,7 @@ const Container = styled.div`
   border-radius: 7px;
 `;
 
-interface Bg {
+export interface Bg {
   bg: string;
 }
 
