@@ -13,6 +13,7 @@ const GET_MOVIES = gql`
     movies {
       id
       medium_cover_image
+      isLiked @client
     }
   }
 `;
@@ -83,13 +84,16 @@ export default () => {
         <Subtitle>Practice it</Subtitle>
       </Header>
       {loading && <Loading>Loading...</Loading>}
-      {!loading && data.movies && (
-        <Movies>
-          {data.movies.map((e: DataType) => (
-            <Movie key={e.id} id={e.id} bg={e.medium_cover_image!} />
-          ))}
-        </Movies>
-      )}
+      <Movies>
+        {data?.movies?.map((e: DataType) => (
+          <Movie
+            key={e.id}
+            id={e.id}
+            isLiked={e.isLiked}
+            bg={e.medium_cover_image!}
+          />
+        ))}
+      </Movies>
     </Container>
   );
 };
