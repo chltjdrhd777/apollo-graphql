@@ -7,6 +7,7 @@ import Movie from "../components/Movie";
 
 //gql = translate the object to the thing which GraphQl can understand
 //useQuery(gql) = send reformed query to graphql server and get an object which contains data,loading....
+//If there is no need to set args for apollo, this request is automatically a queary type
 
 const GET_MOVIES = gql`
   {

@@ -2,6 +2,14 @@ import React from "react";
 import { Link } from "react-router-dom";
 import { DataType } from "../type";
 import styled from "styled-components";
+import { gql } from "apollo-boost";
+import { useMutation } from "@apollo/react-hooks";
+
+const LIKE_MOVIE = gql`
+  mutation likeMovie($id: Int!, $isLiked: Boolean!) {
+    likeMovie(id: $id, isLiked: $isLiked) @client
+  }
+`;
 
 const Container = styled.div`
   height: 100px;
@@ -23,11 +31,24 @@ const Poster = styled.div<Bg>`
   background-position: center center;
 `;
 
-export default ({ id, bg, isLiked }: DataType) => (
-  <Container>
-    <Link to={`/${id}`}>
-      <Poster bg={bg} />
-    </Link>
-    <button>{isLiked ? "Unlike" : "Like"}</button>
-  </Container>
-);
+//? useMutation = it is similar to useState
+//? const [name] = useMutation(mutation requset, {variables <--- like params in axios.get})
+//? that means like "const likeMovie = () => likeMovie() in apollo's resolvers"
+
+export default ({ id, bg, isLiked }: DataType) => {
+  const [likeMovie] = useMutation(LIKE_MOVIE, { variables: { id, isLiked } });
+  return (
+    <Container>
+      <Link to={`/${id}`}>
+        <Poster bg={bg} />
+      </Link>
+      <button
+        onClick={() => {
+          likeMovie();
+        }}
+      >
+        {isLiked ? "Unlike" : "Like"}
+      </button>
+    </Container>
+  );
+};

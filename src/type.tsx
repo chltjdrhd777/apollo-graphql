@@ -10,3 +10,9 @@ export interface suggType {
   title: string;
   medium_cover_image: string;
 }
+
+export interface MutationPropType {
+  rootValue?: any;
+  id?: number;
+  context?: any;
+}
