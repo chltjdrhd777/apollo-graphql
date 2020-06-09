@@ -19,11 +19,13 @@ import { suggType } from "../type";
 const GET_MOVIE = gql`
   query getMovie($id: Int!) {
     movie(id: $id) {
+      id
       title
       medium_cover_image
       description_intro
       rating
       language
+      isLiked @client
     }
     suggestions(id: $id) {
       id
@@ -130,7 +132,13 @@ export default () => {
       <GlobalStyle />
       <Container>
         <Column>
-          <Title>{loading ? "loading..." : data.movie.title}</Title>
+          <Title>
+            {loading
+              ? "loading..."
+              : `${data.movie.title} ${
+                  data.movie.isLiked ? "<unliked>" : "<liked>"
+                }`}
+          </Title>
           <Subtitle>Language : {data?.movie?.language}</Subtitle>
           <Rating>Rating : {data?.movie?.rating}</Rating>
           <Description>{data?.movie?.description_intro}</Description>
